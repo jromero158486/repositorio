@@ -779,3 +779,258 @@ html.js .reveal{
   background: none;
 }
 .text-btn:hover{ border-color: var(--fg); gap: .75rem; }
+
+/* ============================================================
+   Page fade transition (no-JS / reduced-motion safe)
+   ============================================================ */
+html.js body{
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+}
+html.js body.is-ready{ opacity: 1; }
+@media (prefers-reduced-motion: reduce){
+  html.js body{ opacity: 1; transition: none; }
+}
+
+/* ============================================================
+   Generic logo / photo placeholders (genéricos hasta que
+   Joselyn suba sus propios assets)
+   ============================================================ */
+.logo-badge{
+  width: 48px; height: 48px;
+  border-radius: 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: .68rem;
+  letter-spacing: .02em;
+  color: var(--fg-dim);
+  text-align: center;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: border-color .3s var(--ease), color .3s var(--ease);
+}
+.lab-row:hover .logo-badge{ border-color: var(--fg-dim); color: var(--fg); }
+
+.edu-card-top .logo-badge{ width: 38px; height: 38px; font-size: .58rem; border-radius: 6px; }
+
+.pub-thumb.logo-badge{
+  width: 84px; height: 64px;
+  border-radius: 8px;
+  font-size: .74rem;
+  filter: none;
+}
+.pub:hover .pub-thumb.logo-badge{ border-color: var(--fg-dim); color: var(--fg); }
+@media (max-width: 620px){ .pub-thumb.logo-badge{ display: none; } }
+
+/* Generative "signal" placeholder standing in for the profile photo */
+.bio-photo{ position: relative; }
+.bio-photo .photo-placeholder{
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(244,243,238,.08), transparent 60%),
+    var(--bg-panel);
+  position: relative;
+  overflow: hidden;
+}
+.photo-placeholder svg{ width: 62%; opacity: .85; }
+.photo-placeholder path{
+  fill: none;
+  stroke: var(--fg-dim);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.photo-placeholder .ph-pulse{ fill: var(--fg); }
+.photo-placeholder .ph-caption{
+  position: absolute;
+  bottom: 10px; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+@media (prefers-reduced-motion: no-preference){
+  .photo-placeholder .ph-pulse{ animation: blink 2.4s ease-in-out infinite; }
+}
+
+/* CV link — visually flagged as pending until a real file exists */
+.hero-meta a.is-disabled{
+  color: var(--fg-faint);
+  border-color: var(--line);
+  pointer-events: none;
+}
+
+/* ============================================================
+   Stats strip (animated counters)
+   ============================================================ */
+.stat-grid{
+  margin-top: 2.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+  max-width: 640px;
+  gap: 1.6rem 2rem;
+}
+.stat{ border-left: 1px solid var(--line); padding-left: 1rem; }
+.stat-num{
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: -.01em;
+}
+.stat-num::after{ content: attr(data-suffix); }
+.stat-label{
+  display: block;
+  margin-top: .3rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* ============================================================
+   Scroll-progress "ECG" rail — research.html only, desktop
+   ============================================================ */
+.rail{
+  position: absolute;
+  left: -34px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  display: none;
+}
+.lab-list{ position: relative; }
+@media (min-width: 1100px){ .rail{ display: block; } }
+.rail-track{
+  position: absolute;
+  inset: 0;
+  background: var(--line);
+}
+.rail-fill{
+  position: absolute;
+  left: 0; top: 0; right: 0;
+  height: 0%;
+  background: var(--fg-dim);
+  transition: height .1s linear;
+}
+.rail-pulse{
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  width: 7px; height: 7px;
+  margin-left: -3.5px; margin-top: -3.5px;
+  border-radius: 50%;
+  background: var(--fg);
+  box-shadow: 0 0 8px 1px rgba(244,243,238,.5);
+  transition: top .1s linear;
+}
+
+/* ============================================================
+   Publication descriptions (expand on click)
+   ============================================================ */
+.pub-desc{
+  margin-top: .6rem;
+  font-size: .88rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+  max-width: 62ch;
+}
+.pub-more{
+  margin-top: .5rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--fg-faint);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: color .25s, border-color .25s;
+}
+.pub-more:hover{ color: var(--fg); border-color: var(--fg); }
+.pub-desc-full{
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .45s var(--ease);
+}
+.pub-desc-full > div{ overflow: hidden; }
+.pub.is-open .pub-desc-full{ grid-template-rows: 1fr; }
+.pub.is-open .pub-desc-full p{ padding-top: .5rem; }
+.pub{ align-items: start; }
+.pub > div{ padding-top: .1rem; }
+
+/* ============================================================
+   3D tilt cards
+   ============================================================ */
+.tilt{
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ============================================================
+   Magnetic elements (nudge toward the cursor)
+   ============================================================ */
+.magnetic{ display: inline-block; will-change: transform; }
+
+/* ============================================================
+   Custom "signal" cursor — desktop, fine pointers, motion-ok only
+   ============================================================ */
+.cursor-layer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 800;
+}
+#cursorTrail{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 799;
+  mix-blend-mode: screen;
+}
+.cursor-dot{
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  border: 1px solid var(--fg);
+  pointer-events: none;
+  z-index: 800;
+  transition: width .2s var(--ease), height .2s var(--ease), margin .2s var(--ease), background .2s var(--ease), opacity .2s var(--ease);
+}
+.cursor-dot.is-active{
+  width: 40px; height: 40px;
+  margin: -20px 0 0 -20px;
+  background: rgba(244,243,238,.08);
+}
+html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
+
+/* Waveform cursor spotlight */
+.waveform{ position: relative; overflow: visible; }
+.wave-glow{
+  position: absolute;
+  top: 0; left: 0;
+  width: 260px; height: 260px;
+  margin: -130px 0 0 -130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244,243,238,.5) 0%, rgba(244,243,238,0) 70%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+  pointer-events: none;
+}
+.waveform:hover .wave-glow{ opacity: 1; }
