@@ -645,6 +645,18 @@ html.js .marquee-track{
   transition: filter .3s var(--ease);
 }
 .pub:hover .pub-thumb{ filter: grayscale(0) contrast(1.05); }
+.pub-thumb-fallback{
+  width: 72px; height: 56px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-faint);
+}
+.pub-thumb-fallback svg{ width: 22px; height: 22px; }
+@media (max-width: 560px){ .pub-thumb-fallback{ display: none; } }
 .pub-title{
   font-family: var(--font-display);
   font-weight: 600;
@@ -795,6 +807,113 @@ html.js .marquee-track{
   color: var(--fg-dim);
 }
 .callout strong{ color: var(--fg); }
+
+/* ============================================================
+   Projects
+   ============================================================ */
+.project-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: clamp(1.2rem,3vw,1.8rem);
+}
+.project-grid.is-compact{ grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); }
+.project{
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(1.1rem,2.4vw,1.4rem);
+  display: flex;
+  flex-direction: column;
+  transition: border-color .3s var(--ease), transform .12s linear;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.project:hover{ border-color: var(--fg-dim); }
+.project-top{ display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; margin-bottom: .5rem; }
+.project-title{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.06rem;
+  line-height: 1.3;
+}
+.project-status{
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--fg-faint);
+  border: 1px solid var(--line);
+  padding: .2rem .5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.project-desc{ font-size: .85rem; color: var(--fg-dim); line-height: 1.55; margin-bottom: .9rem; }
+.project-recognition{
+  font-size: .78rem;
+  color: var(--fg-dim);
+  margin-bottom: .9rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.project-recognition strong{ color: var(--fg); font-weight: 500; }
+.project-tags{ display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; margin-bottom: 1rem; }
+.project-tag{
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--fg-dim);
+  border: 1px solid var(--line-soft);
+  padding: .2rem .5rem;
+  border-radius: 4px;
+}
+.project-links{ display: flex; gap: .7rem; }
+.project-link{
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: .4rem .65rem;
+  transition: border-color .25s, background .25s, color .25s;
+}
+.project-link svg{ width: 14px; height: 14px; flex-shrink: 0; }
+.project-link:hover{ background: var(--fg); color: var(--invert-fg); border-color: var(--fg); }
+.project-link.is-disabled{
+  color: var(--fg-faint);
+  pointer-events: none;
+  opacity: .55;
+}
+.project-link.is-disabled:hover{ background: none; }
+
+/* Featured strip on the home page */
+.featured-projects .section-note a{ color: var(--fg); border-bottom: 1px solid var(--line); }
+.featured-projects .section-note a:hover{ border-color: var(--fg); }
+
+/* Category grouping on the full projects page, reuses .group/.group-title */
+.project-jump{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin: 1.6rem 0 clamp(2.2rem,5vw,3.4rem);
+}
+.project-jump a{
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--fg-dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .4rem .9rem;
+  transition: all .25s var(--ease);
+}
+.project-jump a:hover{ background: var(--invert-bg); color: var(--invert-fg); border-color: var(--invert-bg); }
 
 /* ============================================================
    Footer
