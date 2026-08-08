@@ -53,12 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* ---------- Research entry accordion ---------- */
+  /* ---------- Research entry / Year accordion ---------- */
   document.querySelectorAll('.lab-row').forEach(btn => {
     btn.addEventListener('click', () => {
       const lab = btn.closest('.lab');
       lab.classList.toggle('is-open');
       btn.setAttribute('aria-expanded', lab.classList.contains('is-open') ? 'true' : 'false');
+    });
+  });
+  document.querySelectorAll('.year-row').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const block = btn.closest('.year-block');
+      block.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', block.classList.contains('is-open') ? 'true' : 'false');
     });
   });
 
@@ -132,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     requestAnimationFrame(raf);
 
-    const hoverables = 'a, button, .lab-row, .award, .lead-card, .pill';
+    const hoverables = 'a, button, .lab-row, .year-row, .award, .lead-card, .pill, .collage-item';
     document.querySelectorAll(hoverables).forEach(el => {
       el.addEventListener('mouseenter', () => ring.classList.add('is-hovering'));
       el.addEventListener('mouseleave', () => ring.classList.remove('is-hovering'));
