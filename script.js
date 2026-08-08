@@ -78,72 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Reduced motion / touch checks up front ---------- */
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* ---------- Tilt on Award / Leadership cards ---------- */
-  if (!prefersReduced && hasFinePointer) {
-    document.querySelectorAll('.award, .lead-card').forEach(card => {
-      const strength = 7; // max degrees
-      card.addEventListener('mousemove', (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width;  // 0..1
-        const py = (e.clientY - r.top) / r.height;  // 0..1
-        const rx = (0.5 - py) * strength * 2;
-        const ry = (px - 0.5) * strength * 2;
-        card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
-        const media = card.querySelector('.card-media img');
-        if (media) media.style.transform = `scale(1.06) translate(${(px - 0.5) * -8}px, ${(py - 0.5) * -8}px)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-        const media = card.querySelector('.card-media img');
-        if (media) media.style.transform = '';
-      });
-    });
-  }
-
-  /* ---------- Magnetic hover on nav links / buttons ---------- */
-  if (!prefersReduced && hasFinePointer) {
-    document.querySelectorAll('.magnetic').forEach(el => {
-      const pull = 0.35;
-      el.addEventListener('mousemove', (e) => {
-        const r = el.getBoundingClientRect();
-        const dx = (e.clientX - r.left - r.width / 2) * pull;
-        const dy = (e.clientY - r.top - r.height / 2) * pull;
-        el.style.transform = `translate(${dx}px, ${dy}px)`;
-      });
-      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
-    });
-  }
-
-  /* ---------- Custom cursor ring ---------- */
-  if (!prefersReduced && hasFinePointer) {
-    const ring = document.createElement('div');
-    ring.className = 'cursor-ring';
-    document.body.appendChild(ring);
-
-    let x = 0, y = 0, tx = 0, ty = 0;
-    const lerp = (a, b, n) => a + (b - a) * n;
-
-    window.addEventListener('mousemove', (e) => {
-      tx = e.clientX; ty = e.clientY;
-      ring.classList.add('is-active');
-    });
-    document.addEventListener('mouseleave', () => ring.classList.remove('is-active'));
-
-    const raf = () => {
-      x = lerp(x, tx, 0.2);
-      y = lerp(y, ty, 0.2);
-      ring.style.transform = `translate(${x}px, ${y}px)`;
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-
-    const hoverables = 'a, button, .lab-row, .year-row, .award, .lead-card, .pill, .collage-item';
-    document.querySelectorAll(hoverables).forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('is-hovering'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('is-hovering'));
-    });
-  }
+  /* v2: removed card tilt, magnetic hover, and custom cursor ring —
+     going for a plainer editorial feel with fewer "look at me" effects. */
 
 });
